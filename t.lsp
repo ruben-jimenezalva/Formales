@@ -19,10 +19,10 @@ y
  (recorrer2 L 0))
 
 (DE recorrer2 (L i)
-(COND
-((NULL (rest L)) (list (first L) i))
-(T (prin3 "hola")
-)))
+  (COND
+    ((NULL (rest L)) (list (first L) i))
+    (T (prin3 (list (first L) i))(setq D (+ i 1)) (terpri)(recorrer2 (REST L) D))))
+
 (de compa (a b)
  (if (equal a b) (setq m 5) (exit)))
 

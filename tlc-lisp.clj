@@ -129,12 +129,12 @@
                     (igual? (count (next expre)) 2)
                         (
                             let [res (evaluar (first (nnext expre)) amb-global amb-local)]
-                            (list (first res) (actualizar-amb amb-global (fnext expre) (first res)) )
+                            (list (first res) (actualizar-amb (fnext res) (fnext expre) (first res)) )
                         )
                     true (
                         ;recursive setq
                         let [res (evaluar (first (nnext expre)) amb-global amb-local)]
-                        (evaluar (cons 'setq  (next (nnext expre)) ) (actualizar-amb amb-global (fnext expre) (first res)) )
+                        (evaluar (cons 'setq  (next (nnext expre)) ) (actualizar-amb amb-global (fnext expre) (first res)) nil )
                     )
             )
 

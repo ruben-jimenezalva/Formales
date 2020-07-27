@@ -39,11 +39,11 @@
     (is (= (aplicar 'equal '(das das) '(ambiente) '()) '(t (ambiente)) ))
 )
 
-(is (= () '() ))
-(is (= () '() ))
-(is (= () '() ))
-(is (= () '() ))
-(is (= () '() ))
+; (is (= () '() ))
+; (is (= () '() ))
+; (is (= () '() ))
+; (is (= () '() ))
+; (is (= () '() ))
 ; (is (= () '() ))
 ; (is (= () '() ))
 
@@ -83,9 +83,9 @@
 (is (= (evaluar-cond '(((equal 'a 'b) (setq x 1))) '(equal equal first first) nil) '(nil (equal equal first first)) ))
 (is (= (evaluar-cond '(((equal 'a 'b) (setq x 1)) ((equal 'a 'a) (setq y 2))) '(equal equal setq setq) nil) '(2 (equal equal setq setq y 2)) ))
 (is (= (evaluar-cond '(((equal 'a 'b) (setq x 1)) ((equal 'a 'a) (setq y 2) (setq z 3))) '(equal equal setq setq) nil) '(3 (equal equal setq setq y 2 z 3)) ))
-(is (=  ' ))
-(is (=  ' ))
-(is (=  ' ))
+; (is (=  ' ))
+; (is (=  ' ))
+; (is (=  ' ))
 
 
 ; ;#########################
@@ -194,8 +194,12 @@
 ;#########################
 ;TEST de setq
 ;#########################
-; (evaluar '(setq dada nil) '(not not nil nil) '() )
+(evaluar '(setq dada nil) '(not not nil nil) '() )
+(evaluar '(setq dada 5) '(not not nil nil) '() )
+(is (= '(1 (+ add doble (lambda (x) (+ x x)) x doble y 1)) (evaluar '(setq x (de doble (x) (+ x x)) y 1) '(+ add) nil)))
+(evaluar '(setq x (de doble (x) (+ x x)) y 1) '(+ add) nil)
 
+(evaluar '(setq x (de doble (x) (+ x x))) '(+ add) nil)
 ;#########################
 ;TEST de null
 ;#########################

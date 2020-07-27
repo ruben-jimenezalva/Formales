@@ -511,3 +511,4 @@
 (evaluar '(or nil nil (gt 9 5) ) '(nil nil + add gt gt) '())
 (evaluar '(or nil nil (gt 1 5) ) '(nil nil + add gt gt) '())
 (evaluar '(or nil nil (gt 1 5) dasbd ) '(nil nil + add gt gt) '())
+(evaluar '(setq x (de doble (x) (+ x x))) '(+ add) nil)
