@@ -1,0 +1,1 @@
+(de multiplicar (a b) (* a b))

@@ -1,0 +1,3 @@
+(de restar (a b) (- a b))
+
+(sumar (lambda (a b) (+ a b)) restar (lambda (a b) (- a b)) x 1 y 2 C (lambda (LF X) (if (null LF) nil (cons ((first LF) X) (C (rest LF) X)))) cargarR (lambda () (prin3 "R: ") (setq R (read)) (prin3 "R * 2: ") (prin3 (+ R R)) (terpri)) recorrer (lambda (L) (recorrer2 L 0)) recorrer2 (lambda (L i) (COND ((NULL (rest L)) (list (first L) i)) (T (prin3 (list (first L) i)) (setq D (+ i 1)) (terpri) (recorrer2 (REST L) D)))) compa (lambda (a b) (if (equal a b) (setq m 5) (exit))))
