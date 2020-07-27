@@ -180,8 +180,10 @@
                         (let [ari (controlar-aridad lae 2)]
                             (cond 
                                 (seq? ari) ari ; Hubo un error ya que la aridad de lae es incorrecta
-                                (not (seq? (first lae))) (list '*error* 'append1 'list-expected (first lae))
-                                (not (seq? (second lae))) (list '*error* 'append2 'list-expected (second lae))
+                                (not (or (seq? (first lae)) (igual? (first lae) nil) )) (list '*error* 'append1 'list-expected (first lae))
+                                (not (or (seq? (second lae)) (igual? (second lae) nil) )) (list '*error* 'append2 'list-expected (second lae))
+                                ; (and (not (seq? (first lae))) (igual? (first lae) nil)) (list '*error* 'append1 'list-expected (first lae))
+                                ; (and (not (seq? (second lae))) (igual? (second lae) nil)) (list '*error* 'append2 'list-expected (second lae))
                                 true (concat (first lae) (second lae))
                             )
                         )
