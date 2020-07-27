@@ -180,13 +180,13 @@
                         (let [ari (controlar-aridad lae 2)]
                             (cond 
                                 (seq? ari) ari ; Hubo un error ya que la aridad de lae es incorrecta
-                                (not (seq? (first lae))) (list '*error* 'list-expected (first lae))
-                                (not (seq? (second lae))) (list '*error* 'list-expected (second lae))
+                                (not (seq? (first lae))) (list '*error* 'append1 'list-expected (first lae))
+                                (not (seq? (second lae))) (list '*error* 'append2 'list-expected (second lae))
                                 true (concat (first lae) (second lae))
                             )
                         )
-                    ; (igual? f 'terpri)(newline)
-                    (igual? f 'terpri) (do (println) nil)
+                    (igual? f 'terpri)(newline)
+                    ; (igual? f 'terpri) (do (println) nil)
                     (igual? f 'cons) 
                         (let [ari (controlar-aridad lae 2)]
                             (cond 
@@ -230,7 +230,7 @@
                             (cond 
                                 (seq? ari) ari
                                 (igual? (first lae) nil) nil
-                                (not (seq? (first lae))) (list '*error* 'list-expected (first lae))
+                                (not (seq? (first lae))) (list '*error* 'first 'list-expected (first lae))
                                 true (ffirst lae)
                             )
                         )
@@ -303,7 +303,7 @@
                               (seq? ari) ari
                               true 
                               (do
-                                  (print (first lae))
+                                  (print (first lae))(flush)
                                   (first lae)
                               )
                             )
@@ -323,7 +323,7 @@
                             ; (not (seq? lae)) (list '*error* 'unresolved-paramter)
                             (= (count lae) 0) (list '*error* 'too-few-args)
                             (igual?(first lae) nil) nil
-                            (not (seq? (first lae))) (list '*error* 'list-expected lae)
+                            (not (seq? (first lae))) (list '*error* 'rest 'list-expected lae)
                             (= (count lae) 1) 
                                 (let [res (next (first lae))]
                                     (seq (map #(if (igual? nil %) nil %) res))
@@ -339,7 +339,7 @@
                             (cond 
                                 (seq? ari) ari ; Hubo un error ya que la aridad de lae es incorrecta
                                 (igual? (first lae) nil) nil
-                                (not (seq? (first lae))) (list '*error* 'list-expected (first lae))
+                                (not (seq? (first lae))) (list '*error* 'reverse 'list-expected (first lae))
                                 true (reverse (first lae))
                             )
                         )

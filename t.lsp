@@ -26,3 +26,7 @@ y
 (de compa (a b)
  (if (equal a b) (setq m 5) (exit)))
 
+ (de ppp (bc)
+    (prin3 "Ingrese el estado inicial: ") (setq inicial (read))
+    (prin3 "Ingrese el estado final: ") (setq final (read)))
+
