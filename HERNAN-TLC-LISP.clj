@@ -512,3 +512,7 @@
 (evaluar '(or nil nil (gt 1 5) ) '(nil nil + add gt gt) '())
 (evaluar '(or nil nil (gt 1 5) dasbd ) '(nil nil + add gt gt) '())
 (evaluar '(setq x (de doble (x) (+ x x))) '(+ add) nil)
+
+; (let [ L '(1 2 3 4 5) ]
+;     ( evaluar '(rest L) '(rest rest nil nil) '() )
+; ) 

@@ -232,15 +232,22 @@
 ;#########################
 ;TEST de rest
 ;#########################
-; (evaluar '(rest '(1 2 3 4 5)) '(rest rest nil nil) '() )
-; (evaluar '(rest '(1 2 3 4 5) 3) '(rest rest nil nil) '() )
-; (evaluar '(rest) '(rest rest nil nil) '() )
-; (evaluar '(rest '(5 8)) '(rest rest nil nil) '() )
-; (evaluar '(rest nil) '(rest rest nil nil) '() )
-; (aplicar 'rest '(()) '(rest rest nil nil add add) '() )
+(evaluar '(rest '(1 2 3 4 5)) '(rest rest nil nil) '() )
+(evaluar '(rest '(1 2 3 4 5) 3) '(rest rest nil nil) '() )
+(evaluar '(rest) '(rest rest nil nil) '() )
+(evaluar '(rest '(5 8)) '(rest rest nil nil) '() )
+(evaluar '(rest nil) '(rest rest nil nil) '() )
+(aplicar 'rest '(()) '(rest rest nil nil add add) '() )
 
-; ; (evaluar '(env) '(rest rest nil nil add add env env) '(hola hola) )
-; ; (aplicar 'env '() '(rest rest nil nil add add env env) '(hola hola) )
+; (let [ L '(1 2 3 4 5) ]
+;    ( evaluar '(rest L) '(rest rest nil nil) '() )
+; )
+ 
+ 
+
+
+; (evaluar '(env) '(rest rest nil nil add add env env) '(hola hola) )
+; (aplicar 'env '() '(rest rest nil nil add add env env) '(hola hola) )
 
 
 

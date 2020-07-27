@@ -374,7 +374,7 @@
         )
     )
 )
- 
+
  ; Controla la aridad (cantidad de argumentos de una funcion).
  ; Recibe una lista y un numero. Si la longitud de la lista coincide con el numero, retorna el numero.
  ; Si es menor, retorna (list '*error* 'too-few-args).
@@ -514,7 +514,7 @@
       let [keys_ (take-nth 2 lis), values_ (take-nth 2 (rest lis))]
       (
         let [idx (first (keep-indexed #(if (igual? elem %2) %1 ) keys_ ))]
-        (if (nil? idx) (list '*error* 'unbound-symbol elem) 
+        (if (nil? idx) (list '*error* 'unbound-symbol elem)
         (nth values_ idx))
       )
     )
@@ -557,7 +557,7 @@
         (let [res (evaluar (first lis) amb-global amb-local)]
             (
                 if (not (igual? (fnext lis) nil))
-                (evaluar-secuencia-en-cond (next lis) (fnext res) nil)
+                (evaluar-secuencia-en-cond (next lis) (second res) amb-local)
                 res
             )
         )
