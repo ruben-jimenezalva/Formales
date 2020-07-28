@@ -132,7 +132,6 @@
                             (list (first res) (actualizar-amb (fnext res) (fnext expre) (first res)) )
                         )
                     true (
-                        ;recursive setq
                         let [res (evaluar (first (nnext expre)) amb-global amb-local)]
                         (evaluar (cons 'setq  (next (nnext expre)) ) (actualizar-amb amb-global (fnext expre) (first res)) nil )
                     )
@@ -161,13 +160,11 @@
 ; el amb. global actualizado con la eval. del 1er. cuerpo (usando el amb. global intacto y el local actualizado con los params. ligados a los args.) y el amb. local intacto. 
 (defn aplicar
     ([f lae amb-global amb-local]
-        (aplicar (revisar-f f) (revisar-lae lae) f lae amb-global amb-local)
-    )
-    ([fRevisada laeRevisada f lae amb-global amb-local]
-        (cond    
-            fRevisada (list fRevisada amb-global)      ; Si la funcion esta revisada tiene errores, se retorna el error con el ambiente global
-            laeRevisada (list laeRevisada amb-global)  ; Si la la lista de arg esta revisada tiene errores, se retorna el error con el ambiente global
-            true (if (not (seq? f)) 
+       (aplicar (revisar-f f) (revisar-lae lae) f lae amb-global amb-local))
+    ([resu1 resu2 f lae amb-global amb-local]
+       (cond resu1 (list resu1 amb-global)
+             resu2 (list resu2 amb-global)
+             true  (if (not (seq? f))
                 (list (cond
                     (or (igual? f 'add) (igual? f '+)) 
                         (if (< (count lae) 2)
@@ -179,22 +176,19 @@
                     (igual? f 'append) 
                         (let [ari (controlar-aridad lae 2)]
                             (cond 
-                                (seq? ari) ari ; Hubo un error ya que la aridad de lae es incorrecta
+                                (seq? ari) ari
                                 (not (or (seq? (first lae)) (igual? (first lae) nil) )) (list '*error* 'append1 'list-expected (first lae))
                                 (not (or (seq? (second lae)) (igual? (second lae) nil) )) (list '*error* 'append2 'list-expected (second lae))
-                                ; (and (not (seq? (first lae))) (igual? (first lae) nil)) (list '*error* 'append1 'list-expected (first lae))
-                                ; (and (not (seq? (second lae))) (igual? (second lae) nil)) (list '*error* 'append2 'list-expected (second lae))
                                 true (concat (first lae) (second lae))
                             )
                         )
-                    (igual? f 'terpri)(newline)
-                    ; (igual? f 'terpri) (do (println) nil)
-                    (igual? f 'cons) 
+                    (igual? f 'terpri)
+                        (newline)
+                    (igual? f 'cons)
                         (let [ari (controlar-aridad lae 2)]
                             (cond 
-                                (seq? ari) ari ; Hubo un error ya que la aridad de lae es incorrecta
+                                (seq? ari) ari
                                 (igual? (second lae) nil) (list (first lae))
-                                ;(seq? (second lae)) (cons (first lae) (second lae))
                                 true (cons (first lae) (second lae))
                             )
                         )
@@ -213,20 +207,11 @@
                             )
                         )
                     (igual? f 'eval) 
-                        ; lae
-                        ; (
                             (cond
                                 (= (count lae) 0) (list '*error* 'too-few-args)
                                 (> (count lae) 1) (first (evaluar lae amb-global amb-local))
                                 true (first lae)
                             )
-                            ; (if (> (count lae) 1)
-                            ;     (evaluar lae amb-global amb-local)
-                            ;     lae
-                            ; )
-                            ; (lae)
-                            ; (evaluar (first lae) amb-global amb-local)
-                        ; )
                     (igual? f 'first) 
                         (let [ari (controlar-aridad lae 1)]
                             (cond 
@@ -239,7 +224,7 @@
                     (igual? f 'ge) 
                         (let [ari (controlar-aridad lae 2)]
                             (cond 
-                                (seq? ari) ari ; Hubo un error ya que la aridad de lae es incorrecta
+                                (seq? ari) ari
                                 (not (number? (first lae))) (list '*error* 'number-expected (first lae))
                                 (not (number? (second lae))) (list '*error* 'number-expected (second lae))
                                 (>= (first lae) (second lae)) 't
@@ -283,8 +268,6 @@
                         (let [ari (controlar-aridad lae 1)]
                             (cond 
                                 (seq? ari) ari
-                                ; (not (first lae)) 't
-                                ; true nil
                                 (igual? (first lae) nil) 't
                                 (igual? (first lae) 't) nil
                             )
@@ -320,9 +303,7 @@
                             )
                         )
                     (igual? f 'rest) 
-                        ; (first lae)
                         (cond
-                            ; (not (seq? lae)) (list '*error* 'unresolved-paramter)
                             (= (count lae) 0) (list '*error* 'too-few-args)
                             (igual?(first lae) nil) nil
                             (not (seq? (first lae))) (list '*error* 'rest 'list-expected lae)
@@ -339,7 +320,7 @@
                     (igual? f 'reverse) 
                         (let [ari (controlar-aridad lae 1)]
                             (cond 
-                                (seq? ari) ari ; Hubo un error ya que la aridad de lae es incorrecta
+                                (seq? ari) ari
                                 (igual? (first lae) nil) nil
                                 (not (seq? (first lae))) (list '*error* 'reverse 'list-expected (first lae))
                                 true (reverse (first lae))
@@ -522,19 +503,7 @@
       )
     )
 )
-; (defn buscar 
-;     [elem lista]
-;     (if (igual? elem nil) 
-;         nil
-;         (do (let [vect (vec lista)]
-;             (def dict (partition 2 vect))
-;             (def pair (filterv #(igual? (first %) elem) dict))
-;             (def value (second (first pair)))
-;             (if (nil? value) (list 'error 'unbound-symbol elem) value))
-;         )
-;     )
-; )
-  
+
 
 ; Evalua el cuerpo de una macro COND. Siempre retorna una lista con un resultado y un ambiente.
 ; Recibe una lista de sublistas (cada una de las cuales tiene una condicion en su 1ra. posicion) y los ambientes global y local.
@@ -566,24 +535,3 @@
         )
     )
 )
-
-; (evaluar '(cond (equal 'a 'a)) '(equal equal first first) nil)
-; '(t (equal equal first first))
-
-; Al terminar de cargar el archivo, se retorna true.
-
-;#############################################################
-;#############################################################
-
-; (actualizar-amb '(+ add - sub) 'x 1)
-; ;(+ add - sub x 1)
-
-; (actualizar-amb '(+ add - sub x 1 y 2) 'x 3)
-; ;(+ add - sub x 3 y 2)
-
-; (let [amb-global  '(add add append append cond cond cons cons de de env env equal equal eval eval exit exit
-;     first first ge ge gt gt if if lambda lambda length length list list load load lt lt nil nil not not
-;     null null or or prin3 prin3 quote quote read read rest rest reverse reverse setq setq sub sub
-;        t t terpri terpri + add - sub)] 
-;        (cargar-arch '() '() "file")
-; )
