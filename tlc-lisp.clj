@@ -432,14 +432,14 @@
                 true
                 (do 
                     (if (string? elem)  (println (str "\"" elem "\"")) (println elem))
-                    (let [elem elem] elem)
+                    elem
                 )
             )
             (if (= (first elem) '*error*)
                 (imprimir elem elem) 
                 (do 
                     (printf "%s%n" elem)
-                    (let [elem elem] elem)
+                    elem
                 )
             )
         )
@@ -448,7 +448,7 @@
         (if (igual? lis nil)
             (do
                 (newline)
-                (let [orig orig] orig)
+                orig
             )
             (do
                 (def elem (first lis))
