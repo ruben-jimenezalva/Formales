@@ -384,9 +384,10 @@
  (defn controlar-aridad [lis val-esperado]      
     (let [size (count lis)]
         (cond
+            (not (seq? lis)) (list '*error* 'list-expected lis)
             (= size val-esperado) val-esperado
-            (< size val-esperado) (list 'list '*error* 'too-few-args)
-            (> size val-esperado) (list 'list '*error* 'too-many-args)
+            (< size val-esperado) (list '*error* 'too-few-args)
+            (> size val-esperado) (list '*error* 'too-many-args)
         )    
     )
 )

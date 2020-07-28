@@ -10,8 +10,7 @@
         (t (buscar bc fin (append (rest grafobusq) (expandir (first grafobusq) bc estexp))
         (if (pertenece (first (first grafobusq)) estexp)
             estexp
-            (cons (first (first grafobusq)) estexp)))))
-)
+            (cons (first (first grafobusq)) estexp))))))
 
 (de expandir (linea basecon estexp)
     (if (or (null basecon) (pertenece (first linea) estexp))
