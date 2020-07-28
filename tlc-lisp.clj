@@ -105,8 +105,11 @@
                 cond 
                 (< (count (next expre)) 1) (list (list '*error* 'too-few-args) amb-global)
                 (> (count (next expre)) 2) (list (list '*error* 'too-many-args) amb-global)
-                (= (count (next expre)) 1) 
-                    (list 't (cargar-arch amb-global amb-local (fnext expre)))
+                (= (count (next expre)) 1)
+                    (do
+                        (with-out-str(def env (cargar-arch amb-global amb-local (fnext expre)) ))
+                        (list (first (take-last 2 env)) env)
+                    )
                 (= (count (next expre)) 2)
                     (list (list '*error* 'falta-implementar) amb-global)
             )
@@ -535,3 +538,5 @@
         )
     )
 )
+
+

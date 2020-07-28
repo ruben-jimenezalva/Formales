@@ -51,10 +51,6 @@
 
     (is (= (evaluar '(cond ((gt 1 5) 3) ( t (+ 89 9) )) '(gt gt + add) '()) '(98 (gt gt + add)) ))
 
-    (is (= (evaluar '(de doble (x) (+ (setq ro 9) ro)) '(+ add) nil) '(doble (+ add doble (lambda (x) (+ x x)))) ))
-
-    (evaluar '(de doble (x) (+ (setq ro 9) ro)) '(+ add) nil)
-
     (is (= (evaluar '((lambda (x) (+ ro x)) 3) '(+ add ro 20) '() ) '(23 (+ add ro 20)) ))
 
     ; exit
@@ -128,7 +124,7 @@
     (is (= (evaluar '(rest nil) '(rest rest nil nil) '() ) '(nil (rest rest nil nil)) ))
     (is (= (aplicar 'rest '(()) '(rest rest nil nil add add) '() ) '(nil (rest rest nil nil add add)) ))
 
-    (is (= (evaluar '(env) '(rest rest nil nil add add env env) '(hola hola) ) '((rest rest nil nil add add env env) (rest rest nil nil add add env env)) ))
+    (is (= (evaluar '(env) '(rest rest nil nil add add env env) '(hola hola) ) '((rest rest nil nil add add env env hola hola) (rest rest nil nil add add env env)) ))
     (is (= (evaluar '(env 1 3) '(env env) '() ) '((*error* too-many-args) (env env)) ))
 
     (is (= (evaluar '(read '()) '(read read nil nil) '() ) '((*error* too-many-args) (read read nil nil)) ))
@@ -181,7 +177,7 @@
 
     (is (= (aplicar 'terpri '()'(amb amb) '()) '(nil (amb amb)) ))
 
-    (is (= (aplicar 'env '() '(rest rest nil nil add add env env) '(hola hola) ) '((rest rest nil nil add add env env) (rest rest nil nil add add env env)) ))
+    (is (= (aplicar 'env '() '(rest rest nil nil add add env env) '(hola hola) ) '((rest rest nil nil add add env env hola hola) (rest rest nil nil add add env env)) ))
 
 )
 
