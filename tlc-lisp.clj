@@ -426,32 +426,34 @@
 ; Si no, imprime su primer elemento en formato estandar, imprime un espacio y se llama recursivamente con la cola del primer parametro y el segundo intacto.
 (defn imprimir
     ([elem]
-        (if (seq? elem)
-            (if (= (first elem) '*error*)
-                (imprimir elem elem) 
+        (if (not (seq? elem))
+            (cond
+                (= \space elem) elem
+                true
                 (do 
-                    (printf "%s\n" elem)
+                    (if (string? elem)  (println (str "\"" elem "\"")) (println elem))
                     (let [elem elem] elem)
                 )
             )
-            (cond
-                (= \space elem) elem
-                true (do 
-                    (if (string? elem)  (println (str "\"" elem "\"")) (println elem))
-                    (let [elem elem] elem))
+            (if (= (first elem) '*error*)
+                (imprimir elem elem) 
+                (do 
+                    (printf "%s%n" elem)
+                    (let [elem elem] elem)
+                )
             )
         )
     )
     ([lis orig]
-        (if (empty? lis)
+        (if (igual? lis nil)
             (do
                 (newline)
                 (let [orig orig] orig)
             )
             (do
-                (def elem (nth lis 0))
+                (def elem (first lis))
                 (if (string? elem)  (printf "%s " (str "\"" elem "\"")) (printf "%s " elem))
-                (imprimir (nthrest lis 1) orig)
+                (imprimir (rest lis) orig)
             )
         )
     )
@@ -538,5 +540,3 @@
         )
     )
 )
-
-
