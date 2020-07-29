@@ -106,9 +106,9 @@
                 (< (count (next expre)) 1) (list (list '*error* 'too-few-args) amb-global)
                 (> (count (next expre)) 2) (list (list '*error* 'too-many-args) amb-global)
                 (= (count (next expre)) 1)
-                    (do
-                        (with-out-str(def env (cargar-arch amb-global amb-local (fnext expre)) ))
-                        (list (first (take-last 2 env)) env)
+                    (
+                        let [out (with-out-str(def env (cargar-arch amb-global amb-local (fnext expre)) ))]
+                        (list (symbol (clojure.string/trim-newline out)) env)
                     )
                 (= (count (next expre)) 2)
                     (list (list '*error* 'falta-implementar) amb-global)
@@ -427,29 +427,19 @@
 (defn imprimir
     ([elem]
         (if (not (seq? elem))
-            (cond
-                (= \space elem) elem
-                true
-                (do 
-                    (if (string? elem)  (println (str "\"" elem "\"")) (println elem))
-                    elem
-                )
+            (if (= \space elem)
+                elem
+                (do (if (string? elem)  (println (str "\"" elem "\"")) (println elem)) elem)
             )
             (if (= (first elem) '*error*)
                 (imprimir elem elem) 
-                (do 
-                    (printf "%s%n" elem)
-                    elem
-                )
+                (do (printf "%s%n" elem) elem)
             )
         )
     )
     ([lis orig]
         (if (igual? lis nil)
-            (do
-                (newline)
-                orig
-            )
+            (do (printf "%n") orig)
             (do
                 (def elem (first lis))
                 (if (string? elem)  (printf "%s " (str "\"" elem "\"")) (printf "%s " elem))
@@ -457,7 +447,8 @@
             )
         )
     )
- ) 
+ )
+
  
  ; Actualiza un ambiente (una lista con claves en las posiciones impares [1, 3, 5...] y valores en las pares [2, 4, 6...]
  ; Recibe el ambiente, la clave y el valor.
@@ -508,6 +499,8 @@
       )
     )
 )
+
+; (buscar '(a a s s f g g) '(1 2 3 4 5))
 
 
 ; Evalua el cuerpo de una macro COND. Siempre retorna una lista con un resultado y un ambiente.
